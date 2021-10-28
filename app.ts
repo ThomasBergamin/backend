@@ -1,9 +1,8 @@
 import express from "express";
+import { router } from "./routes/user";
 
 const app = express();
 
-app.use((req, res) => {
-  res.json({ message: "Votre requête a bien été reçue !" });
-});
+app.use("/api/auth", router);
 
 export default app;
