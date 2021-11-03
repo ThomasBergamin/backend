@@ -48,7 +48,7 @@ export const login = async (
   next: NextFunction
 ) => {
   await User.findOne({ where: { email: req.body.email } })
-    .then((user: any) => {
+    .then((user) => {
       if (!user) {
         return res.status(401).json({ error: "Utilisateur non trouvé !" });
       }
@@ -59,7 +59,7 @@ export const login = async (
         res.status(200).json({
           userId: user.id,
           token: jwt.sign(
-            { userId: user._id },
+            { userId: user.id },
             process.env.SECRET_TOKEN
               ? process.env.SECRET_TOKEN
               : "63dfb00a-82f0-4125-a009-d6e745ba149f",
