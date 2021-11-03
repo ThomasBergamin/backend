@@ -21,6 +21,7 @@ export const permissionControl = (
         : "63dfb00a-82f0-4125-a009-d6e745ba149f"
     );
     const userId = decodedToken.userId;
+
     Gif.findOne({
       where: {
         id: req.params.id,

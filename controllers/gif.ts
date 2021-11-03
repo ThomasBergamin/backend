@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { db } from "../models";
 import { Gif } from "../models/Gif";
+import jwt from "jsonwebtoken";
 
 export const getGifs = (req: Request, res: Response, next: NextFunction) => {
   Gif.findAll()
@@ -16,9 +17,22 @@ export const getGifs = (req: Request, res: Response, next: NextFunction) => {
 
 export const createGif = (req: Request, res: Response, next: NextFunction) => {
   db.sync()
-    .then(() =>
+    .then(() => {
+      const token = req.headers.authorization
+        ? req.headers.authorization.split(" ")[1]
+        : null;
+      if (!token) {
+        throw "Error with headers in request";
+      }
+      const decodedToken: any = jwt.verify(
+        token,
+        process.env.SECRET_TOKEN
+          ? process.env.SECRET_TOKEN
+          : "63dfb00a-82f0-4125-a009-d6e745ba149f"
+      );
+      const userId = decodedToken.userId;
       Gif.create({
-        authorId: req.body.authorId,
+        authorId: userId,
         title: req.body.title,
         url: req.body.url,
       })
@@ -27,8 +41,8 @@ export const createGif = (req: Request, res: Response, next: NextFunction) => {
         )
         .catch((error) =>
           res.status(500).json({ message: "Error while creating Gif", error })
-        )
-    )
+        );
+    })
     .catch((error) => res.status(500).json({ error }));
 };
 
