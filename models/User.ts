@@ -3,8 +3,10 @@ import { db } from "./index";
 
 export interface IUser {
   id: string;
-  username: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  password: string;
 }
 
 export const User = db.define("user", {
