@@ -1,7 +1,7 @@
-import { STRING } from "sequelize";
+import { Model, STRING } from "sequelize";
 import { db } from "./index";
 
-export interface IUser {
+export interface IUser extends Model {
   id: string;
   firstName: string;
   lastName: string;
@@ -9,7 +9,7 @@ export interface IUser {
   password: string;
 }
 
-export const User = db.define("user", {
+export const User = db.define<IUser>("user", {
   firstName: {
     field: "first_name",
     type: STRING,

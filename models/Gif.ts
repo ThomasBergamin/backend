@@ -1,7 +1,7 @@
-import { ARRAY, STRING } from "sequelize";
+import { ARRAY, Model, STRING } from "sequelize";
 import { db } from "./index";
 
-export interface IGif {
+export interface IGif extends Model {
   id: string;
   authorId: string;
   title: string;
@@ -9,7 +9,7 @@ export interface IGif {
   comments?: string[];
 }
 
-export const Gif = db.define("gif", {
+export const Gif = db.define<IGif>("gif", {
   authorId: {
     field: "author_id",
     type: STRING,

@@ -1,7 +1,7 @@
-import { ARRAY, STRING } from "sequelize";
+import { ARRAY, Model, STRING } from "sequelize";
 import { db } from "./index";
 
-export interface IComment {
+export interface IComment extends Model {
   id: string;
   authorId: string;
   gifId: string;
@@ -10,7 +10,7 @@ export interface IComment {
   downvotes: string[];
 }
 
-export const Comment = db.define("comment", {
+export const Comment = db.define<IComment>("comment", {
   authorId: {
     field: "author_id",
     type: STRING,
