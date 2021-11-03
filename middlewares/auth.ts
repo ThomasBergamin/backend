@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 import { NextFunction, Request, Response } from "express";
 
-module.exports = (req: Request, res: Response, next: NextFunction) => {
+export const auth = (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization
       ? req.headers.authorization.split(" ")[1]

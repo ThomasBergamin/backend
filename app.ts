@@ -1,5 +1,6 @@
 import express from "express";
 import { db } from "./models";
+import { gifRoutes } from "./routes/gif";
 import { userRoutes } from "./routes/user";
 
 const app = express();
@@ -26,5 +27,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.use("/api/auth", userRoutes);
+app.use("/api/gifs", gifRoutes);
 
 export default app;

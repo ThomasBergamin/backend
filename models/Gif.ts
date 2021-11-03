@@ -6,7 +6,7 @@ export interface IGif {
   authorId: string;
   title: string;
   url: string;
-  comments: string[];
+  comments?: string[];
 }
 
 export const Gif = db.define("gif", {
@@ -24,7 +24,7 @@ export const Gif = db.define("gif", {
     allowNull: false,
   },
   comment: {
-    type: ARRAY,
+    type: ARRAY(STRING),
     allowNull: true,
   },
 });
