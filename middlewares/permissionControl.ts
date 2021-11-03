@@ -27,7 +27,7 @@ export const permissionControl = (
       },
     })
       .then((gif) => {
-        if (gif && parseInt(gif.authorId) === userId) {
+        if (gif && gif.authorId === userId) {
           next();
         } else {
           throw res.status(403).json({
@@ -35,7 +35,7 @@ export const permissionControl = (
           });
         }
       })
-      .catch((error) => {
+      .catch(() => {
         res.status(404);
       });
   } catch (error: any) {

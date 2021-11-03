@@ -1,4 +1,4 @@
-import { Model, STRING } from "sequelize";
+import { Model, STRING, UUID, UUIDV4 } from "sequelize";
 import { db } from "./index";
 
 export interface IUser extends Model {
@@ -10,6 +10,11 @@ export interface IUser extends Model {
 }
 
 export const User = db.define<IUser>("user", {
+  id: {
+    type: UUID,
+    defaultValue: UUIDV4,
+    primaryKey: true,
+  },
   firstName: {
     field: "first_name",
     type: STRING,

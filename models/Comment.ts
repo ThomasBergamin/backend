@@ -1,4 +1,4 @@
-import { ARRAY, Model, STRING } from "sequelize";
+import { ARRAY, Model, STRING, UUID, UUIDV4 } from "sequelize";
 import { db } from "./index";
 
 export interface IComment extends Model {
@@ -11,6 +11,11 @@ export interface IComment extends Model {
 }
 
 export const Comment = db.define<IComment>("comment", {
+  id: {
+    type: UUID,
+    defaultValue: UUIDV4,
+    primaryKey: true,
+  },
   authorId: {
     field: "author_id",
     type: STRING,

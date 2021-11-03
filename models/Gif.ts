@@ -1,4 +1,4 @@
-import { ARRAY, Model, STRING } from "sequelize";
+import { ARRAY, UUID, UUIDV4, Model, STRING } from "sequelize";
 import { db } from "./index";
 
 export interface IGif extends Model {
@@ -10,6 +10,11 @@ export interface IGif extends Model {
 }
 
 export const Gif = db.define<IGif>("gif", {
+  id: {
+    type: UUID,
+    defaultValue: UUIDV4,
+    primaryKey: true,
+  },
   authorId: {
     field: "author_id",
     type: STRING,
