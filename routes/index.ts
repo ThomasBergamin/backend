@@ -1,4 +1,4 @@
-export { authRoutes } from "./user";
+export { authRoutes } from "./auth";
 
 export { gifRoutes } from "./gif";
 

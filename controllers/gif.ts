@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { db } from "../models";
 import { Gif } from "../models/Gif";
 import jwt from "jsonwebtoken";
+import { Comment } from "../models/Comment";
 
 export const getGifs = (req: Request, res: Response, next: NextFunction) => {
   Gif.findAll()
@@ -92,5 +93,21 @@ export const updateOneGif = (
     })
     .catch((error) => {
       res.status(400).json({ message: "Error while updating Gif", error });
+    });
+};
+
+export const getGifComments = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  Comment.findAll({ where: { gifId: req.params.id } })
+    .then((comments) => {
+      res.status(200).json(comments);
+    })
+    .catch((error) => {
+      res.status(400).json({
+        error,
+      });
     });
 };
