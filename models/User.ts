@@ -1,4 +1,5 @@
 import { Model, STRING, UUID, UUIDV4 } from "sequelize";
+import { Comment } from "./Comment";
 import { Gif } from "./Gif";
 import { db } from "./index";
 
@@ -46,3 +47,7 @@ export const User = db.define<IUser>("user", {
 
 User.hasMany(Gif);
 Gif.belongsTo(User);
+User.hasMany(Comment);
+Comment.belongsTo(User);
+Gif.hasMany(Comment);
+Comment.belongsTo(Gif);

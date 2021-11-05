@@ -28,7 +28,7 @@ export const permissionControl = (
       },
     })
       .then((gif) => {
-        if (gif && gif.authorId === userId) {
+        if (gif && gif.userId === userId) {
           next();
         } else {
           throw res.status(403).json({

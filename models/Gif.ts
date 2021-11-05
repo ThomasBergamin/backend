@@ -1,13 +1,12 @@
 import { ARRAY, UUID, UUIDV4, Model, STRING } from "sequelize";
+import { Comment } from "./Comment";
 import { db } from "./index";
-import { User } from "./User";
 
 export interface IGif extends Model {
   id: string;
-  authorId: string;
+  userId: string;
   title: string;
   url: string;
-  comments?: string[];
 }
 
 export const Gif = db.define<IGif>("gif", {
@@ -23,9 +22,5 @@ export const Gif = db.define<IGif>("gif", {
   url: {
     type: STRING,
     allowNull: false,
-  },
-  comment: {
-    type: ARRAY(STRING),
-    allowNull: true,
   },
 });

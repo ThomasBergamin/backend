@@ -3,11 +3,11 @@ import { db } from "./index";
 
 export interface IComment extends Model {
   id: string;
-  authorId: string;
+  userId: string;
   gifId: string;
   content: string;
-  upvotes: string[];
-  downvotes: string[];
+  /* upvotes: string[];
+  downvotes: string[]; */
 }
 
 export const Comment = db.define<IComment>("comment", {
@@ -16,26 +16,16 @@ export const Comment = db.define<IComment>("comment", {
     defaultValue: UUIDV4,
     primaryKey: true,
   },
-  authorId: {
-    field: "author_id",
-    type: STRING,
-    allowNull: false,
-  },
-  gifId: {
-    field: "gif_id",
-    type: STRING,
-    allowNull: false,
-  },
   content: {
     type: STRING,
     allowNull: false,
   },
-  upvotes: {
+  /* upvotes: {
     type: ARRAY,
     allowNull: true,
   },
   downvotes: {
     type: ARRAY,
     allowNull: true,
-  },
+  }, */
 });
