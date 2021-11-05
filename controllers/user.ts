@@ -18,27 +18,21 @@ export const signup = (
 ) => {
   bcrypt
     .hash(req.body.password, 10)
-    .then((hash) =>
-      db
-        .sync()
-        .then(async () => {
-          await User.create({
-            lastName: req.body.lastName,
-            firstName: req.body.firstName,
-            password: hash,
-            email: req.body.email,
-          })
-            .then(() =>
-              res.status(200).json({ message: "User successfully created" })
-            )
-            .catch((error) =>
-              res
-                .status(500)
-                .json({ message: "Error while creating user", error })
-            );
-        })
-        .catch((error) => res.status(500).json({ error }))
-    )
+    .then((hash) => async () => {
+      await User.create({
+        lastName: req.body.lastName,
+        firstName: req.body.firstName,
+        password: hash,
+        email: req.body.email,
+      })
+        .then(() =>
+          res.status(200).json({ message: "User successfully created" })
+        )
+        .catch((error) =>
+          res.status(500).json({ message: "Error while creating user", error })
+        );
+    })
+
     .catch((error) => res.status(500).json({ error }));
 };
 

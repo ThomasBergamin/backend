@@ -1,4 +1,5 @@
 import { Model, STRING, UUID, UUIDV4 } from "sequelize";
+import { Gif } from "./Gif";
 import { db } from "./index";
 
 export interface IUser extends Model {
@@ -42,3 +43,6 @@ export const User = db.define<IUser>("user", {
     },
   },
 });
+
+User.hasMany(Gif);
+Gif.belongsTo(User);

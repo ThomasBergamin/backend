@@ -32,7 +32,7 @@ export const permissionControl = (
           next();
         } else {
           throw res.status(403).json({
-            message: "User ID non autorisé à modifier ce gif",
+            message: "User ID non autorisé à modifier cet objet",
           });
         }
       })
