@@ -46,9 +46,10 @@ export const getOneGif = (req: Request, res: Response, next: NextFunction) => {
     where: {
       id: req.params.id,
     },
+    include: Comment,
   })
-    .then((gifs) => {
-      res.status(200).json(gifs);
+    .then((gif) => {
+      res.status(200).json(gif && gif.comments);
     })
     .catch((error) => {
       res.status(400).json({

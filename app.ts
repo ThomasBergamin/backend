@@ -1,18 +1,19 @@
 import express from "express";
 import { db } from "./models";
 import { authRoutes, gifRoutes, commentRoutes } from "./routes";
+import { defineRelationships } from "./models/Relations";
 
 const app = express();
 
 db.authenticate()
-  .then(() =>
-    db
-      .sync()
+  .then(() => {
+    defineRelationships();
+    db.sync()
       .then(() =>
         console.log(`Connection to database has been established successfully.`)
       )
-      .catch((error) => console.error("Unable to sync with database:", error))
-  )
+      .catch((error) => console.error("Unable to sync with database:", error));
+  })
   .catch((error) => console.error("Unable to connect to the database:", error));
 
 app.use((req, res, next) => {

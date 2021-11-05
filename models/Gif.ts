@@ -1,5 +1,5 @@
 import { ARRAY, UUID, UUIDV4, Model, STRING } from "sequelize";
-import { Comment } from "./Comment";
+import { Comment, IComment } from "./Comment";
 import { db } from "./index";
 
 export interface IGif extends Model {
@@ -7,6 +7,7 @@ export interface IGif extends Model {
   userId: string;
   title: string;
   url: string;
+  comments?: IComment[];
 }
 
 export const Gif = db.define<IGif>("gif", {

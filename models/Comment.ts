@@ -1,4 +1,4 @@
-import { ARRAY, Model, STRING, UUID, UUIDV4 } from "sequelize";
+import { Model, STRING, UUID, UUIDV4 } from "sequelize";
 import { db } from "./index";
 
 export interface IComment extends Model {
@@ -20,12 +20,4 @@ export const Comment = db.define<IComment>("comment", {
     type: STRING,
     allowNull: false,
   },
-  /* upvotes: {
-    type: ARRAY,
-    allowNull: true,
-  },
-  downvotes: {
-    type: ARRAY,
-    allowNull: true,
-  }, */
 });

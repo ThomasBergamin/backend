@@ -44,10 +44,3 @@ export const User = db.define<IUser>("user", {
     },
   },
 });
-
-User.hasMany(Gif);
-Gif.belongsTo(User);
-User.hasMany(Comment);
-Comment.belongsTo(User);
-Gif.hasMany(Comment);
-Comment.belongsTo(Gif);
