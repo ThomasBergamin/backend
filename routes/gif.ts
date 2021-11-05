@@ -14,5 +14,5 @@ export const gifRoutes = express.Router();
 gifRoutes.get("/", auth, getGifs);
 gifRoutes.post("/", auth, createGif);
 gifRoutes.get("/:id", auth, getOneGif);
-gifRoutes.put("/:id", auth, permissionControl, updateOneGif);
-gifRoutes.delete("/:id", auth, permissionControl, deleteOneGif);
+gifRoutes.put("/:id", auth, permissionControl("gif"), updateOneGif);
+gifRoutes.delete("/:id", auth, permissionControl("gif"), deleteOneGif);
