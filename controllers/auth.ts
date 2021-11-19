@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { db } from "../models";
 import { User } from "../models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export const signup = (
+export const signup = async (
   req: {
     body: {
       lastName: string;
@@ -16,24 +15,17 @@ export const signup = (
   res: Response,
   next: NextFunction
 ) => {
-  bcrypt
-    .hash(req.body.password, 10)
-    .then((hash) => async () => {
-      await User.create({
-        lastName: req.body.lastName,
-        firstName: req.body.firstName,
-        password: hash,
-        email: req.body.email,
-      })
-        .then(() =>
-          res.status(200).json({ message: "User successfully created" })
-        )
-        .catch((error) =>
-          res.status(500).json({ message: "Error while creating user", error })
-        );
-    })
-
-    .catch((error) => res.status(500).json({ error }));
+  const hash = await bcrypt.hash(req.body.password, 10);
+  await User.create({
+    lastName: req.body.lastName,
+    firstName: req.body.firstName,
+    password: hash,
+    email: req.body.email,
+  })
+    .then(() => res.status(200).json({ message: "User successfully created" }))
+    .catch((error) =>
+      res.status(500).json({ message: "Error while creating user", error })
+    );
 };
 
 export const login = async (
