@@ -3,10 +3,13 @@ import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 
 export const auth = (req: Request, res: Response, next: NextFunction) => {
+  console.log("Checking authentication", req.headers, req.body);
   try {
+    console.log(req.headers.authorization);
     const token = req.headers.authorization
       ? req.headers.authorization.split(" ")[1]
       : null;
+    console.log(token);
     if (!token) {
       throw "Error with headers in request";
     }
@@ -20,9 +23,11 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
     if (req.body.userId && req.body.userId !== userId) {
       throw "User ID non valable";
     } else {
+      console.log("Authentication successful");
       next();
     }
   } catch (error: any) {
+    console.log("Error with authentication", error);
     res.status(401).json({ error: error || "Requête non authentifiée" });
   }
 };
