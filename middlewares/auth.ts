@@ -3,13 +3,11 @@ import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 
 export const auth = (req: Request, res: Response, next: NextFunction) => {
-  console.log("Checking authentication", req.headers, req.body);
+  console.log("Checking authentication");
   try {
-    console.log(req.headers.authorization);
     const token = req.headers.authorization
       ? req.headers.authorization.split(" ")[1]
       : null;
-    console.log(token);
     if (!token) {
       throw "Error with headers in request";
     }

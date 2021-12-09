@@ -62,7 +62,7 @@ export const getOneGif = (req: Request, res: Response, next: NextFunction) => {
     include: Comment,
   })
     .then((gif) => {
-      res.status(200).json(gif && gif.comments);
+      res.status(200).json(gif);
     })
     .catch((error) => {
       res.status(400).json({
