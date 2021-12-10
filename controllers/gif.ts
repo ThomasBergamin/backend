@@ -30,7 +30,6 @@ export const createGif = (req: Request, res: Response, next: NextFunction) => {
       : "63dfb00a-82f0-4125-a009-d6e745ba149f"
   );
   const userId = decodedToken.userId;
-
   if (req.file) {
     Gif.create({
       userId,
