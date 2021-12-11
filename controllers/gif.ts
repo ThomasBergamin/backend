@@ -3,6 +3,7 @@ import { db } from "../models";
 import { Gif } from "../models/Gif";
 import jwt from "jsonwebtoken";
 import { Comment } from "../models/Comment";
+import fs from "fs";
 
 export const getGifs = (req: Request, res: Response, next: NextFunction) => {
   Gif.findAll()
@@ -75,16 +76,31 @@ export const deleteOneGif = (
   res: Response,
   next: NextFunction
 ) => {
-  Gif.destroy({
-    where: {
-      id: req.params.id,
-    },
-  })
-    .then(() => {
-      res.status(200).json({ message: "Gif successfully deleted" });
+  Gif.findOne({ where: { id: req.params.id } })
+    .then((gif) => {
+      if (gif) {
+        const filename = gif.url.split("/images/")[1];
+        fs.unlink(`images/${filename}`, () => {
+          Gif.destroy({
+            where: {
+              id: req.params.id,
+            },
+          })
+            .then(() => {
+              res.status(200).json({ message: "Gif successfully deleted" });
+            })
+            .catch((error) => {
+              res
+                .status(400)
+                .json({ message: "Error while deleting Gif", error });
+            });
+        });
+      }
     })
     .catch((error) => {
-      res.status(400).json({ message: "Error while deleting Gif", error });
+      res.status(400).json({
+        error,
+      });
     });
 };
 
