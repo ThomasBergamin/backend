@@ -17,5 +17,11 @@ gifRoutes.get("/", auth, getGifs);
 gifRoutes.post("/", auth, multerMiddleware, createGif);
 gifRoutes.get("/:id", auth, getOneGif);
 gifRoutes.get("/:id/comments", auth, getGifComments);
-gifRoutes.put("/:id", auth, permissionControl("gif"), updateOneGif);
+gifRoutes.put(
+  "/:id",
+  auth,
+  permissionControl("gif"),
+  multerMiddleware,
+  updateOneGif
+);
 gifRoutes.delete("/:id", auth, permissionControl("gif"), deleteOneGif);

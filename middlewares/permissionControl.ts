@@ -5,6 +5,7 @@ import { Gif } from "../models/Gif";
 
 export const permissionControl = (model: "gif" | "comment") => {
   return (req: Request, res: Response, next: NextFunction) => {
+    console.log("Checking permissions for user");
     try {
       const token = req.headers.authorization
         ? req.headers.authorization.split(" ")[1]

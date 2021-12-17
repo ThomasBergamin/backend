@@ -109,14 +109,38 @@ export const updateOneGif = (
   res: Response,
   next: NextFunction
 ) => {
-  Gif.update(
-    { authorId: req.body.authorId, title: req.body.title, url: req.body.url },
-    {
-      where: {
-        id: req.params.id,
-      },
+  let updatedGif;
+
+  if (req.file) {
+    updatedGif = {
+      userId: req.body.userId,
+      title: req.body.title,
+      url: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+    };
+  } else {
+    updatedGif = {
+      userId: req.body.userId,
+      title: req.body.title,
+      url: req.body.url,
+    };
+  }
+  Gif.findOne({ where: { id: req.params.id } }).then((gif) => {
+    if (gif && (req.file || req.body.url)) {
+      const filename = gif.url.split("/images/")[1];
+      if (filename) {
+        fs.unlink(`images/${filename}`, (err) => {
+          if (err) console.log(err);
+          console.log(`${filename} was deleted`);
+        });
+      }
     }
-  )
+  });
+
+  Gif.update(updatedGif, {
+    where: {
+      id: req.params.id,
+    },
+  })
     .then(() => {
       res.status(200).json({ message: "Gif successfully updated" });
     })
