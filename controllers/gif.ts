@@ -6,7 +6,7 @@ import { Comment } from "../models/Comment";
 import fs from "fs";
 
 export const getGifs = (req: Request, res: Response, next: NextFunction) => {
-  Gif.findAll()
+  Gif.findAll({ order: [["createdAt", "DESC"]] })
     .then((gifs) => {
       res.status(200).json(gifs);
     })

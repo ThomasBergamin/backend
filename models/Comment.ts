@@ -6,8 +6,6 @@ export interface IComment extends Model {
   userId: string;
   gifId: string;
   content: string;
-  /* upvotes: string[];
-  downvotes: string[]; */
 }
 
 export const Comment = db.define<IComment>("comment", {
