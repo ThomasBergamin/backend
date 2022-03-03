@@ -30,22 +30,28 @@ export const createGif = (req: Request, res: Response, next: NextFunction) => {
       ? process.env.SECRET_TOKEN
       : "63dfb00a-82f0-4125-a009-d6e745ba149f"
   );
+
   const userId = decodedToken.userId;
+  console.log(req.body);
   if (req.file) {
     Gif.create({
       userId,
       title: req.body.title,
       url: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+      isAFile: true,
     })
       .then(() => res.status(200).json({ message: "Gif successfully created" }))
-      .catch((error) =>
-        res.status(500).json({ message: "Error while creating Gif", error })
-      );
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json({ message: "Error while creating Gif", error });
+      });
   } else {
+    console.log("ok");
     Gif.create({
       userId: userId,
       title: req.body.title,
       url: req.body.url,
+      isAFile: false,
     })
       .then(() => res.status(200).json({ message: "Gif successfully created" }))
       .catch((error) =>
@@ -116,12 +122,14 @@ export const updateOneGif = (
       userId: req.body.userId,
       title: req.body.title,
       url: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+      isAFile: true,
     };
   } else {
     updatedGif = {
       userId: req.body.userId,
       title: req.body.title,
       url: req.body.url,
+      isAFile: false,
     };
   }
   Gif.findOne({ where: { id: req.params.id } }).then((gif) => {

@@ -1,4 +1,4 @@
-import { ARRAY, UUID, UUIDV4, Model, STRING } from "sequelize";
+import { ARRAY, UUID, UUIDV4, Model, STRING, BOOLEAN } from "sequelize";
 import { Comment, IComment } from "./Comment";
 import { db } from "./index";
 
@@ -7,6 +7,7 @@ export interface IGif extends Model {
   userId: string;
   title: string;
   url: string;
+  isAFile: boolean;
   comments?: IComment[];
 }
 
@@ -22,6 +23,10 @@ export const Gif = db.define<IGif>("gif", {
   },
   url: {
     type: STRING,
+    allowNull: false,
+  },
+  isAFile: {
+    type: BOOLEAN,
     allowNull: false,
   },
 });
