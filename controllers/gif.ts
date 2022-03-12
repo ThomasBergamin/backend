@@ -50,7 +50,7 @@ export const createGif = (req: Request, res: Response, next: NextFunction) => {
     Gif.create({
       userId: userId,
       title: req.body.title,
-      url: req.body.url,
+      url: req.body.url ? req.body.url : "",
       isAFile: false,
     })
       .then(() => res.status(200).json({ message: "Gif successfully created" }))

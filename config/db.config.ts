@@ -1,3 +1,5 @@
+import { config } from "dotenv";
+config();
 export const dbConfig = {
   HOST: "localhost",
   USER: process.env.DB_USERNAME || "postgres",
