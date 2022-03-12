@@ -1,4 +1,4 @@
-import { Model, STRING, UUID, UUIDV4 } from "sequelize";
+import { Model, STRING, UUID, UUIDV4, BOOLEAN } from "sequelize";
 import { Comment } from "./Comment";
 import { Gif } from "./Gif";
 import { db } from "./index";
@@ -42,5 +42,9 @@ export const User = db.define<IUser>("user", {
     validate: {
       min: 6,
     },
+  },
+  isSuperAdmin: {
+    type: BOOLEAN,
+    allowNull: false,
   },
 });

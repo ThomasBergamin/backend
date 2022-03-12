@@ -10,6 +10,7 @@ export const signup = async (
       email: string;
       firstName: string;
       password: string;
+      isSuperAdmin: boolean;
     };
   },
   res: Response,
@@ -21,6 +22,7 @@ export const signup = async (
     firstName: req.body.firstName,
     password: hash,
     email: req.body.email,
+    isSuperAdmin: req.body.isSuperAdmin,
   })
     .then(() => res.status(200).json({ message: "User successfully created" }))
     .catch((error) =>
