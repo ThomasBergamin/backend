@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { Comment } from "../models/Comment";
 import { Gif } from "../models/Gif";
+import { User } from "../models/User";
 
 export const permissionControl = (model: "gif" | "comment") => {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -21,44 +22,54 @@ export const permissionControl = (model: "gif" | "comment") => {
       );
       const userId = decodedToken.userId;
 
-      if (model === "gif") {
-        Gif.findOne({
-          where: {
-            id: req.params.id,
-          },
-        })
-          .then((gif) => {
-            if (gif && gif.userId === userId) {
-              next();
-            } else {
-              throw res.status(403).json({
-                message: "User ID non autorisé à modifier cet objet",
+      User.findOne({
+        where: {
+          id: userId,
+        },
+      }).then((user) => {
+        if (user && user.isSuperAdmin) {
+          next();
+        } else {
+          if (model === "gif") {
+            Gif.findOne({
+              where: {
+                id: req.params.id,
+              },
+            })
+              .then((gif) => {
+                if (gif && gif.userId === userId) {
+                  next();
+                } else {
+                  throw res.status(403).json({
+                    message: "User ID non autorisé à modifier cet objet",
+                  });
+                }
+              })
+              .catch(() => {
+                res.status(404);
               });
-            }
-          })
-          .catch(() => {
-            res.status(404);
-          });
-      }
-      if (model === "comment") {
-        Comment.findOne({
-          where: {
-            id: req.params.id,
-          },
-        })
-          .then((comment) => {
-            if (comment && comment.userId === userId) {
-              next();
-            } else {
-              throw res.status(403).json({
-                message: "User ID non autorisé à modifier cet objet",
+          }
+          if (model === "comment") {
+            Comment.findOne({
+              where: {
+                id: req.params.id,
+              },
+            })
+              .then((comment) => {
+                if (comment && comment.userId === userId) {
+                  next();
+                } else {
+                  throw res.status(403).json({
+                    message: "User ID non autorisé à modifier cet objet",
+                  });
+                }
+              })
+              .catch(() => {
+                res.status(404);
               });
-            }
-          })
-          .catch(() => {
-            res.status(404);
-          });
-      }
+          }
+        }
+      });
     } catch (error: any) {
       res.status(401).json({ error: error });
     }

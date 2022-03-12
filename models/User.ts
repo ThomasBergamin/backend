@@ -9,6 +9,7 @@ export interface IUser extends Model {
   lastName: string;
   email: string;
   password: string;
+  isSuperAdmin: boolean;
 }
 
 export const User = db.define<IUser>("user", {

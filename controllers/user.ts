@@ -6,7 +6,7 @@ export const getOneUser = (req: Request, res: Response, next: NextFunction) => {
     where: {
       id: req.params.id,
     },
-    attributes: ["firstName", "lastName", "id", "createdAt"],
+    attributes: ["firstName", "lastName", "id", "isSuperAdmin", "createdAt"],
   })
     .then((user) => {
       res.status(200).json(user);
